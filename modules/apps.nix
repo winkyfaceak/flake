@@ -19,8 +19,10 @@
   environment.systemPackages = with pkgs; [
     git
     gh
-    mc
+    yazi
     lazygit
+    python3
+    git-lfs
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -57,6 +59,7 @@
       "raycast"
       "rectangle"
       "linearmouse"
+      "drawio"
     ];
   };
 }
