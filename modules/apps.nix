@@ -60,6 +60,8 @@
       "rectangle"
       "linearmouse"
       "drawio"
+      "gimp"
+      "pycharm-ce"
     ];
   };
 }
