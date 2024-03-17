@@ -16,6 +16,9 @@
   # But on macOS, it's less stable than homebrew.
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
+
+  services.yabai.enable = true;
+  services.skhd.enable = true;
   environment.systemPackages = with pkgs; [
     git
     gh
