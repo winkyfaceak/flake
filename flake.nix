@@ -60,8 +60,8 @@
         ./modules/nix-core.nix
         ./modules/system.nix
         ./modules/apps.nix
-        ./modules/yabai.nix
-        ./modules/skhd.nix
+        #./modules/yabai.nix
+        #./modules/skhd.nix
         ./modules/host-users.nix
       ];
     };

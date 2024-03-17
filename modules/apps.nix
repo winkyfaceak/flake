@@ -17,8 +17,8 @@
   #
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
 
-  services.yabai.enable = true;
-  services.skhd.enable = true;
+  #services.yabai.enable = true;
+  #services.skhd.enable = true;
   environment.systemPackages = with pkgs; [
     git
     gh
@@ -59,6 +59,7 @@
     casks = [
       "arc"
       "maccy"
+      "rectangle"
       "raycast"
       "linearmouse"
       "drawio"
