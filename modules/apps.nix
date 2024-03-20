@@ -65,6 +65,11 @@
       "drawio"
       "gimp"
       "pycharm-ce"
+      "inkscape"
+      "discord"
+      "windscribe"
+      "steam"
+      "obsidian"
     ];
   };
 }
