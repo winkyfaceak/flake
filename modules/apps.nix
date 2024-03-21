@@ -26,6 +26,7 @@
     lazygit
     python3
     git-lfs
+    go
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
