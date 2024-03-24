@@ -71,6 +71,8 @@
       "windscribe"
       "steam"
       "obsidian"
+      "OpenEmu"
+      "transmission"
     ];
   };
 }
