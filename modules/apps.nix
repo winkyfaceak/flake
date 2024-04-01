@@ -53,6 +53,7 @@
     brews = [
       # "aria2"  # download tool
       "m-cli"
+      "yarn"
     ];
 
     # `brew install --cask`
