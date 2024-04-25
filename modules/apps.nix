@@ -24,9 +24,13 @@
     gh
     yazi
     lazygit
-    python3
+    eza
     git-lfs
     go
+    gopls
+    gcc
+    cmake
+    vlang
   ];
 
   # TODO To make this work, homebrew need to be installed manually, see https://brew.sh
@@ -53,7 +57,7 @@
     brews = [
       # "aria2"  # download tool
       "m-cli"
-      "yarn"
+      "node"
     ];
 
     # `brew install --cask`
@@ -74,6 +78,7 @@
       "obsidian"
       "OpenEmu"
       "transmission"
+      "zed"
     ];
   };
 }
