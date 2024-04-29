@@ -1,71 +1,52 @@
 {
-  description = "Nix for macOS configuration";
+  description = "My personal NixOS configuration";
 
-  ##################################################################################################################
-  #
-  # Want to know Nix in details? Looking for a beginner-friendly tutorial?
-  # Check out https://github.com/ryan4yin/nixos-and-flakes-book !
-  #
-  ##################################################################################################################
-
-  # the nixConfig here only affects the flake itself, not the system configuration!
-  nixConfig = {
-    substituters = [
-      # Query the mirror of USTC first, and then the official cache.
-      "https://cache.nixos.org"
-    ];
-  };
-
-  # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
-  # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    darwin = {
-      url = "github:lnl7/nix-darwin";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim = {
-      url = "github:winkyfaceak/nvim";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  # The `outputs` function will return all the build results of the flake.
-  # A flake can have many use cases and different types of outputs,
-  # parameters in `outputs` are defined in `inputs` and can be referenced by their names.
-  # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
-  # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
-  outputs = inputs @ {
+  outputs = {
     self,
     nixpkgs,
-    darwin,
+    nix-darwin,
+    home-manager,
     ...
-  }: let
-    # TODO replace with your own username and system
-    username = "jamescollings";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-
-    hostname = "${username}-macbook";
-    specialArgs =
-      inputs
-      // {
-        inherit username hostname;
-      };
+  } @ inputs: let
+    systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+    pkgsForEach = nixpkgs.legacyPackages;
   in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
-      inherit system specialArgs;
+    darwinConfigurations."jamescollings-macbook" = nix-darwin.lib.darwinSystem {
       modules = [
-        ./modules/nix-core.nix
-        ./modules/system.nix
-        ./modules/apps.nix
-        #./modules/yabai.nix
-        #./modules/skhd.nix
-        ./modules/host-users.nix
+        ./hosts/mac
+        home-manager.darwinModules.home-manager
       ];
+
+      specialArgs = {
+        inherit self inputs;
+      };
     };
-    # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+
+    formatter = forAllSystems (system: pkgsForEach.${system}.alejandra);
+
+    devShells = forAllSystems (system: {
+      default = pkgsForEach.${system}.mkShellNoCC {
+        packages = with pkgsForEach.${system}; [
+          statix
+          deadnix
+          alejandra
+        ];
+      };
+    });
   };
 }
