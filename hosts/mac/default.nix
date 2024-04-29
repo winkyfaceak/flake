@@ -18,7 +18,7 @@
       inherit self inputs;
     };
 
-    users.jamescollings = import ./home;
+    users.jamescollings = import ../../home;
   };
 
   users.users.jamescollings = {
