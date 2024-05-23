@@ -46,6 +46,8 @@
       "OpenEmu"
       "transmission"
       "zed"
+      "goland"
+      "clion"
     ];
   };
 }
