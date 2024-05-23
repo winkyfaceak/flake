@@ -48,6 +48,7 @@
       "zed"
       "goland"
       "clion"
+      "webstorm"
     ];
   };
 }
